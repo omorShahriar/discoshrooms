@@ -1,0 +1,699 @@
+<head>
+    
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--@cfbootstrap@-->
+		<link rel="stylesheet" href="bootstrap.min.css">
+		<script src="jquery-3.4.1.min.js"></script>
+		<script src="bootstrap.bundle.min.js"></script>
+		<!--/@cfbootstrap@-->
+    <script cfdefaultscript="1">
+    
+    </script>
+    
+		<script>
+		function cfCountDowntimer(){
+			try
+			{	let doc=document.querySelectorAll(`div[data-countdown-timer="1"]`);
+				doc=doc[doc.length-1];
+				let nostart=doc.querySelectorAll(`div[idd="nostart"]`)[0];
+				let exp=doc.querySelectorAll(`div[idd="exp"]`)[0];
+				let timer=doc.querySelectorAll(`div[idd="noexp"]`);
+				let tempShow=function(cond)
+				{
+					if(cond===1)
+					{
+						nostart.style.display="none";
+						exp.style.display="none";
+						timer.forEach((docc)=>{ docc.style.display="block"; });
+					}
+					else if(cond===2)
+					{
+						nostart.style.display="block";
+						exp.style.display="none";
+						timer.forEach((docc)=>{ docc.style.display="none"; });
+					}
+					else
+					{
+						nostart.style.display="none";
+						exp.style.display="block";
+						timer.forEach((docc)=>{ docc.style.display="none"; });
+					}
+				}
+				let showTime=function(selector,time){
+					try
+					{	time=time.toString();
+						time=(time.length<2)? "0"+time:time;
+						doc.querySelectorAll(`div[idd="${selector}"]`)[0].innerHTML=time;
+					}catch(err){console.log(err);}
+				};
+				let verify=function(){
+				let start=new Date(doc.getAttribute("data-countdown-min")).getTime();
+				let destin=new Date(doc.getAttribute("data-countdown-max")).getTime();
+				let current=new Date(new Date(Date.now()).toUTCString()).getTime();
+				if(destin<current)
+				{
+					tempShow(0);
+				}
+				else if(current<start)
+				{
+					tempShow(2);
+				}
+				else
+				{	
+					tempShow(1);
+					let diff=Math.round((destin-current)/1000);
+					let diff_days=Math.floor(diff/(24*60*60));
+					let diff_hours=Math.floor((diff%(24*60*60))/3600);
+					let diff_mins=Math.floor(((diff%(24*60*60))%3600)/60);
+					let diff_sec=Math.floor(((diff%(24*60*60))%3600)%60);
+					if(doc.getAttribute("data-start-timer")=='true')
+					{
+						showTime('d',diff_days);
+						showTime('h',diff_hours);
+						showTime('m',diff_mins);
+						showTime('s',diff_sec);
+					}
+				}
+					setTimeout(verify,200);
+				};
+				verify();
+			}
+			catch(err){console.log(err);}
+		}
+		function cfTimeDowntimer(){
+			try
+			{	
+				let doc=document.querySelectorAll(`div[data-timedown-time="1"]`);
+
+				doc=doc[doc.length-1];
+				
+				let reset = doc.getAttribute("data-start-timer");
+				console.log( reset=="false",reset,"fae" );
+
+				let days1    = doc.querySelectorAll(`div[idd="d"]`)[0];
+				let days  = parseInt(days1.getAttribute("data-timedown-d"));
+				days = days*24*60*60;
+				days = !isNaN( days ) ? days:0;
+
+				let hours1   = doc.querySelectorAll(`div[idd="h"]`)[0];
+				let hours  = parseInt(hours1.getAttribute("data-timedown-h"));
+				hours = hours*60*60;
+
+				hours = !isNaN( hours ) ? hours:0;
+
+				let minutes1 = doc.querySelectorAll(`div[idd="m"]`)[0];
+				let minutes  = parseInt(minutes1.getAttribute("data-timedown-m"));
+				minutes = minutes*60
+
+				minutes = !isNaN( minutes ) ? minutes:0;
+
+				let seconds1 = doc.querySelectorAll(`div[idd="s"]`)[0];
+				let seconds  = parseInt(seconds1.getAttribute("data-timedown-s"));
+
+				seconds = !isNaN( seconds ) ? seconds:0;
+				
+				let times = days + hours + minutes + seconds;
+				times = times*1000;
+
+				var countDownDate=0;
+
+				if(reset=="false" || reset.length==0)
+				{
+					console.log( reset );
+					var saved_countdown = localStorage.getItem("cfTimeDowntimer");
+					if(saved_countdown == null) {
+						// Set the time were counting down to using the time allowed
+						let new_countdown = new Date().getTime() + times;
+				
+						countDownDate = new_countdown;
+						localStorage.setItem("cfTimeDowntimer", new_countdown);
+					} else {
+						countDownDate = parseInt(saved_countdown);
+					}
+
+				}
+				else{
+					countDownDate = new Date().getTime() + times
+				}
+				
+				// Fixed Value to add each time the counter get to 0
+				var distanceToAdd = countDownDate - new Date().getTime();   
+
+				var x = setInterval(function() {
+
+					var now = new Date().getTime();					
+					var distance = countDownDate - now;
+
+					var days = Math.floor(distance / (1000 * 60 * 60 * 24));					
+					var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+					if (distance < 0) {
+						if( reset=="false" || reset.length==0)
+						{
+							//Add Time to your timer goal instead of canceling interval
+							var new_countdo = (new Date().getTime() + times)-1000;
+							localStorage.setItem("cfTimeDowntimer", new_countdo);
+							//Add Time to your timer goal instead of canceling interval
+							countDownDate = new_countdo;
+						}else{
+							countDownDate += distanceToAdd;
+
+						}
+					}
+					else {
+						days1.innerHTML=days;
+						hours1.innerHTML=hours;
+						minutes1.innerHTML=minutes;
+						seconds1.innerHTML=seconds;
+					}
+				}, 1000);
+			}
+			catch(err){console.log(err);}
+		};
+		</script>
+ 
+    
+<link rel="stylesheet" href="all.css">
+<style id="vvvebjs-styles"></style>
+</head>
+
+<body>
+    <div id="banner" class="section p-top-120 p-left-20 p-right-20 p-bottom-200" style="background-image: url('https://garnermassivedeals.com/spotlight/assets/media/Discoschrooms_display_picture_LONG_4.jpg');">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-lg-6 col-md-6 col-sm-12 align-self-center p-left-40 p-right-40" style="color: rgb(0, 0, 0) !important;">
+
+				
+
+				<h1 class="fz-60 fw-700 white" style="color: rgb(255, 255, 255) !important;">Shine bright, party right!</h1>
+
+				<p class="white" style="color: rgb(255, 255, 255) !important; padding-top: 0px !important; height: 366px !important; width: 183px !important; margin-bottom: 16px !important;">Get the glow!</p>
+
+				<div class="row mt-40">
+
+					<div class="col-lg-6 col-md-6 col-md-12"><button class="btn btn-warning" style="display: inline-block !important; text-decoration-color: rgb(170, 73, 223) !important; background-color: rgb(161, 84, 171) !important; color: rgb(255, 255, 255) !important; cursor: pointer;" data-autolink="1" data-autolink-url="https://garnermassivedeals.com/spotlight/discoschrooms/product-page/">Get it now</button></div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div class="container">
+  
+    <!-- Page Heading -->
+    <h1 class="my-4" style="text-align: center !important;">DiscoSchrooms</h1>
+  
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+          <a href="#"><img class="card-img-top" src="photos_under_header_photo_Holding_Schroom.jpg" alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              
+            </h4>
+            <p class="card-text" style="text-align: center !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 512 512" fill="#eaed0c" style="width: 40px !important; height: 40px !important;" color="#eaed0c"><path d="M480,208H308L256,48,204,208H32l140,96L118,464,256,364,394,464,340,304Z" style="fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:32px"></path><polygon points="256 48 256 364 118 464 172 304 32 208 204 208 256 48"></polygon></svg>467 Reviews </p><div style="float: left !important; text-align: center !important;">"Now my space feels like a magical haven and I'm living for it!"</div><p></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+          <a href="#"><img class="card-img-top" src="photos_under_header_photo_Schroom_Room.jpg" alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              
+            </h4>
+            <p class="card-text" style="text-align: center !important;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" fill="#eaed0c" style="width: 40px !important; height: 40px !important;">
+		<path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"></path>
+    </svg><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 512 512" fill="#eaed0c" style="width: 40px !important; height: 40px !important;" color="#eaed0c"><path d="M480,208H308L256,48,204,208H32l140,96L118,464,256,364,394,464,340,304Z" style="fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:32px"></path><polygon points="256 48 256 364 118 464 172 304 32 208 204 208 256 48"></polygon></svg>467 Reviews  </p>
+          <div style="text-align: center !important;"><span style="font-family: Poppins, sans-serif; float: left !important;">"Bought one for my bestie's birthday, and she can't stop raving about it. It's the star of her apartment - literally glows with cool vibes!"</span></div></div>
+        </div>
+      </div>
+      
+      
+      
+      
+    </div>
+    <!-- /.row -->
+  
+    <!-- Pagination -->
+    
+  
+  </div>
+
+<!-- End Banner Section -->
+
+<!-- About Section -->
+
+
+
+
+
+
+<!-- End About Section -->
+
+<div id="details" class="section p-all-4" style="background-image: url(&quot;https://garnermassivedeals.com/spotlight/assets/js/vv/media/Gradient_Background_Clouds_Above_and_Below_Product_2.jpg&quot;); background-color: rgb(255, 255, 255) !important; background-repeat: no-repeat !important; background-size: cover !important; height: 1013px !important;">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-lg-6 col-md-6 col-sm-12"><div style="opacity: 0 !important; height: 109px !important;">Lorem ipsum</div>
+
+				
+
+			<img src="photos_under_header_photo_Love_Schroom.jpg" class="img-fluid"></div>
+
+			<div class="col-lg-6 col-md-6 col-sm-12 p-left-40">
+
+				
+
+				<h1 class="mb-30 fw-800 white fz-55" style="color: rgb(255, 255, 255) !important; text-align: left !important; text-decoration-color: rgb(255, 255, 255) !important; border-color: rgb(255, 255, 255) !important; border-width: 0px !important;"><div></div></h1><h1 class="mb-30 fw-800 white fz-55" style="color: rgb(255, 255, 255) !important; text-align: left !important; text-decoration-color: rgb(255, 255, 255) !important; border-color: rgb(255, 255, 255) !important; border-width: 0px !important; opacity: 0 !important;"><div></div>Clear</h1><h1 class="mb-30 fw-800 white fz-55" style="color: rgb(255, 255, 255) !important; text-align: left !important; text-decoration-color: rgb(255, 255, 255) !important; border-color: rgb(255, 255, 255) !important; border-width: 0px !important;"><div></div>Be the glow-getter!</h1>
+
+				<p class="white" style="color: rgb(0, 0, 0) !important;"></p><div style="color: rgb(255, 255, 255) !important;">Imagine a handmade treasure that lights up your space and sets the perfect groove - that's what we've got. Each mushroom-shaped disco ball is a one-of-a-kind work of art, made just for you. Small quirks? Just part of its unique story. It's a statement that screams, "This is my style!" And it works magic, adding that special glow to parties or chill sessions with friends.</div><div style="color: rgb(255, 255, 255) !important;"></div><p></p>
+
+				<p class="white" style="color: rgb(0, 0, 0) !important;"></p><div style="color: rgb(255, 255, 255) !important;"></div><p></p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div><div id="details" class="section p-all-4" style="background-color: rgb(255, 255, 255) !important;">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-lg-6 col-md-6 col-sm-12"><img src="photos_under_header_photo_Shine_Bright.jpg" class="img-fluid">
+
+				
+
+			</div>
+
+			<div class="col-lg-6 col-md-6 col-sm-12 p-left-40">
+
+				
+
+				<h1 class="mb-30 fw-800 white fz-55" style="color: rgb(64, 64, 64) !important;">Got flair for unique decor?</h1>
+
+				
+
+				<p class="white" style="color: rgb(0, 0, 0) !important;"></p><div style=""><span style="font-weight: bold;">Individuality</span>: Each DiscoSchroom is crafted by hand, meaning no two are alike - a unique declaration of your personality.</div><div>  </div><div><span style="font-weight: bold;">Happiness </span><span style="font-weight: bold;">Boost</span>: With its sparkly design, it injects spaces with an instant 'happy' vibe that lifts your spirits.</div><div><br></div><div><span style="font-weight: bold;">Thrills </span><span style="font-weight: bold;">Galore</span>: Expect a fun light show as the DiscoSchroom twinkle unpredictably when hit by light - pure joy in anticipation!</div><div><br></div><div><span style="font-weight: bold;">Homey </span><span style="font-weight: bold;">Bliss </span><span style="font-weight: bold;">&amp; </span><span style="font-weight: bold;">Safety </span><span style="font-weight: bold;">Feelings</span>: When used as home decor, they bring a soothing atmosphere that symbolizes peace and security within your haven.</div><div><br></div><div><span style="font-weight: bold;">Conjuring </span><span style="font-weight: bold;">Magic</span> <span style="font-weight: bold;">&amp;</span> <span style="font-weight: bold;">Wonderment </span>: Their dazzling design transforms any room into a dreamy landscape, sparking wonderment and intrigue in a fairy-tale-like setting.</div><br><p></p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div><header class="slider-blocks">
+    <div id="carouselExampleIndicators" class="carousel slide pointer-event" data-bs-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true">
+        </li><li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="">
+        </li><li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="">
+      </li></ol>
+      <div class="carousel-inner" role="listbox">
+        <!-- Slide One - Set the background image for this slide in the line below -->
+        <div class="carousel-item active" style="background-image: url('https://littlewarriorlegacy.com/home/assets/media/SlideShow_Photo_1.jpg');">
+          <div class="carousel-caption d-none d-md-block">
+            
+            
+          </div>
+        </div>
+        <!-- Slide Two - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('https://littlewarriorlegacy.com/home/assets/media/SlideShow_picture_2.jpg');">
+          <div class="carousel-caption d-none d-md-block">
+            
+            
+          </div>
+        </div>
+        <!-- Slide Three - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url('https://littlewarriorlegacy.com/home/assets/media/SlideShow_picture_3.jpg');">
+          <div class="carousel-caption d-none d-md-block">
+            
+            
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+    </div>
+      
+  <style>
+  .slider-blocks .carousel-item {
+    height: 100vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  </style>  
+  </header><header class="slider-blocks">
+    <div id="carouselExampleIndicators" class="carousel slide pointer-event" data-bs-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true">
+        </li><li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="">
+        </li><li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="">
+      </li></ol>
+      
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+    </div>
+      
+  <style>
+  .slider-blocks .carousel-item {
+    height: 100vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  </style>  
+  </header><div id="details" class="section p-all-4 text-center" style="background-image: url('https://garnermassivedeals.com/spotlight/assets/media/Gradient_Background_Clouds_Below_Long.jpg'); background-color: rgb(255, 255, 255) !important; background-repeat: no-repeat !important; background-size: cover !important; height: 960px !important;"><div style="color: rgb(255, 255, 255) !important; text-align: center !important; line-height: 23px !important; font-size: 22px !important; height: 131px !important;" class="text-center"><h2 class="section-title fz-40 fw-700 H2--8148365" st-font-family="H2--8148365" style="padding-top: 0px !important; padding-bottom: 0px !important;">Get the Sparkle everyone is talking about!</h2></div>
+
+	<div class="container">
+
+		<div class="row">
+
+			
+
+			
+
+		</div>
+
+	</div>
+
+<img src="Money_back_small_-_1.png" class="img-fluid" style="max-width: 223px !important;"><img src="High_Quality_Support_-_1.png" class="img-fluid" style="max-width: 220px !important;"><img src="small_badge_Handmadepng.png" class="img-fluid" style="max-width: 217px !important;"></div><div class="container" style="min-height:150px;"><h2 class="section-title fz-40 fw-700 H2--8148365" st-font-family="H2--8148365" style="text-align: center !important;">Trusted by over 4,400+ Happy Customers</h2></div><h1></h1>
+
+<!-- Testimonial Section -->
+
+<div id="testimonial" class="section p-all-4 text-center" style="background-color: rgb(255, 255, 255) !important;">
+
+	<div class="container" style="background-image: url('https://littlewarriorlegacy.com/home/assets/media/Pink_Background_2.png'); background-repeat: no-repeat !important; background-size: cover !important;">
+
+		<div class="row">
+
+			<div class="col-lg-12 col-md-12 text-center">
+
+				
+
+				<p style="font-size: 20px !important; font-weight: 400 !important; float: left !important;" st-font-family="P--2064539" class="P--2064539">We average 5-star reviews from trusted online source such as Facebook, Amazon and Trustpilot! Read our customers reviews on our product page to hear directly from our happy customers!</p><div></div><p></p>
+
+			</div>
+
+		</div>
+
+		<div class="row mt-40">
+
+			
+
+			
+
+			
+
+		</div>
+
+	<img src="Amazon_Reviews.png" class="img-fluid"><img src="Facebook_Reviews.png" class="img-fluid"><img src="Trustpilot_Reviews.png" class="img-fluid"></div>
+
+</div><div id="testimonial" class="section p-all-4" style="background-color: rgb(255, 255, 255) !important;">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-lg-12 col-md-12 text-center">
+
+				
+
+				<h2 class="section-title fz-40 fw-700">Customer Testimonials</h2>
+
+			</div>
+
+		</div>
+
+		<div class="row mt-40">
+
+			<div class="col-lg-4 col-md-4 col-sm-12 text-center">
+
+				<div class="testim-inner first mt-40" style="background-color: rgb(230, 230, 230) !important;">
+
+					<img src="Customer_review_1.jpg" alt="testimonials" class="testim-img profile">
+
+					<p>I decked my dorm with this discoschroom and suddenly, I'm the queen of lights. Friends can't get enough of my shiny, vibe-setting decor!</p>
+
+					<h6>Natalie</h6>
+
+					<div class="testim-rating text-center mt-20">
+
+						
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-12">
+
+				<div class="testim-inner" style="background-color: rgb(230, 230, 230) !important;">
+
+					<img src="Customer_review_2.jpg" alt="testimonials" class="testim-img profile">
+
+					<p>My bestie squealed when she unwrapped the discoschroom - it's her 'shine bright' mantra. Now, she's the trendsetter in our group.</p>
+
+					<h6>Ashley</h6>
+
+					<div class="testim-rating text-center mt-20">
+
+						
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-12">
+
+				<div class="testim-inner" style="background-color: rgb(230, 230, 230) !important;">
+
+					<img src="Customer_review_3.jpg" alt="testimonials" class="testim-img profile">
+
+					<p>After setting up my disco ball in our apartment, every night feels like a party. It's so shiny! Even the snarkiest friend was impressed.</p>
+
+					<h6>Capria</h6>
+
+					<div class="testim-rating text-center mt-20">
+
+						
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+<button class="btn btn-warning" style="display: inline-block !important; text-decoration-color: rgb(170, 73, 223) !important; background-color: rgb(161, 84, 171) !important; color: rgb(255, 255, 255) !important; height: 85px !important; border-color: rgb(255, 255, 255) !important; text-decoration-style: solid !important; cursor: pointer;" data-autolink="1" data-autolink-url="https://garnermassivedeals.com/spotlight/discoschrooms/product-page/">Get it now</button><span data-custom-code="">
+
+ </span></div><div class="faq-one-column">
+      <div class="container-sm text-white p-lg-4">
+          <div class="main-heading text-center p-sm-3 m-sm-3 pb-2">
+              <h1 class="text-center font-weight-bolder" style="color: rgb(199, 199, 199) !important;">FAQ</h1>
+          </div>
+          <div class="w-xl-50 w-md-75 w-100 p-sm-3 p-0 pb-2">
+              <div class="card bg-dark mb-4">
+                  <div class="card-header">
+                    <h6 class="font-weight-bolder caret-down-c">
+                      <a href="#faqOne" class="card-link d-flex justify-content-between align-item-center collapsed" data-bs-toggle="collapse" aria-expanded="false" style="color: rgb(199, 199, 199) !important;"> ARE THESE DISCOSCHROOMS HANDMADE LIKE YOU SAY<i class="fas fa-caret-down"></i>
+                      </a>
+                    </h6>
+                  </div>
+                  <div id="faqOne" class="fade collapse" style="">
+                    <div class="card-body" style="color: rgb(199, 199, 199) !important;">
+                        Yes they are! each one has its own personality and charm, just the way we like it!</div>
+                  </div>
+                </div>
+                <div class="card bg-dark mb-4">
+                  <div class="card-header">
+                    <h6 class="font-weight-bolder caret-down-c">
+                      <a href="#faqTwo" class="card-link d-flex justify-content-between align-item-center collapsed active" data-bs-toggle="collapse" aria-expanded="false" style="color: rgb(199, 199, 199) !important;"> IF SOMETHING GOES WRONG OR IF I NEED HELP CAN I COUNT ON CUSTOMER SERVICE TO HELP ME?<i class="fas fa-caret-down fa-caret-up"></i>
+                      </a>
+                    </h6>
+                  </div>
+                  <div id="faqTwo" class="fade collapse" style="">
+                    <div class="card-body" style="color: rgb(199, 199, 199) !important;">
+                        Certainly, we're here to assist you. Although refunds are typically provided for undelivered packages, we are dedicated to supporting you with any concerns you may have.</div>
+                  </div>
+                </div>
+                <div class="card bg-dark mb-4">
+                  <div class="card-header">
+                    <h6 class="font-weight-bolder caret-down-c">
+                      <a href="#faqThree" class="card-link d-flex justify-content-between align-item-center collapsed active" data-bs-toggle="collapse" aria-expanded="false" style="color: rgb(199, 199, 199) !important;"> WILL THE LIGHT REFLECTIONS FROM THE DISCOSCHROOM BE TOO MUCH OR NOT ENOUGH FOR THE VIBE I WANT?<i class="fas fa-caret-down fa-caret-up"></i>
+                      </a>
+                    </h6>
+                  </div>
+                  <div id="faqThree" class="fade collapse" style="">
+                    <div class="card-body" style="color: rgb(199, 199, 199) !important;">
+                        Under the right lighting the DiscoSchroom can shine light on all sides of the room you are in. Try putting in direct sunlight and watch your room sparkle!</div>
+                  </div>
+                </div>
+                <div class="card bg-dark mb-4">
+                  <div class="card-header">
+                    <h6 class="font-weight-bolder caret-down-c">
+                      <a href="#faqFour" class="card-link d-flex justify-content-between align-item-center collapsed active" data-bs-toggle="collapse" aria-expanded="false" style="color: rgb(199, 199, 199) !important;"> WILL IT LAST OR WILL IT FALL APART?<i class="fas fa-caret-down fa-caret-up"></i>
+                      </a>
+                    </h6>
+                  </div>
+                  <div id="faqFour" class="fade collapse" style="">
+                    <div class="card-body" style="color: rgb(199, 199, 199) !important;">
+                        handle with care as the DiscoSchroom likes to party the night away, but they do not like to be thrown around as they can lose on of their mirrors.</div>
+                  </div>
+                </div>
+                <div class="card bg-dark mb-4">
+                  <div class="card-header">
+                    <h6 class="font-weight-bolder caret-down-c">
+                      <a href="#faqFive" class="card-link d-flex justify-content-between align-item-center collapsed active" data-bs-toggle="collapse" aria-expanded="false" style="color: rgb(199, 199, 199) !important;">DO YOU OFFER FREE SHIPPING?<i class="fas fa-caret-down fa-caret-up"></i>
+                      </a>
+                    </h6>
+                  </div>
+                  <div id="faqFive" class="fade collapse" style="">
+                    <div class="card-body" style="color: rgb(199, 199, 199) !important;">The price already includes shipping, so there are no hidden fees or additional costs to worry about.</div>
+                  </div>
+                </div>
+                <div class="card bg-dark mb-4">
+                  <div class="card-header">
+                    <h6 class="font-weight-bolder caret-down-c">
+                      <a href="#faqSix" class="card-link d-flex justify-content-between align-item-center collapsed" data-bs-toggle="collapse" aria-expanded="false" style="color: rgb(199, 199, 199) !important;">WHAT ABOUT SHIPPING TIMES?<i class="fas fa-caret-down"></i>
+                      </a>
+                    </h6>
+                  </div>
+                  <div id="faqSix" class="fade collapse" style="">
+                    <div class="card-body" style="color: rgb(199, 199, 199) !important;">Shipping should take 7- 15 days. If your package is extremely late or did arrive you are eligible for a refund. But please be aware that these are selling fast and shipping times could take longer, please be patient.</div>
+                  </div>
+                </div>
+          </div>
+        
+      </div>
+  <style type="text/css">
+  .faq-one-column{
+    background-color: #000000;
+  }
+  .faq-one-column{
+    background-color: #000000;
+  }
+  .faq-one-column .caret-down-c a.active{
+    color: #99de99;
+  }
+  .faq-one-column p{
+    color: #818181;
+  }
+  </style>
+  
+  
+  </div><div id="details" class="section p-all-4" style="background-color: rgb(0, 0, 0) !important;">
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-lg-6 col-md-6 col-sm-12">
+
+				
+
+			</div>
+
+			
+
+		</div>
+
+	</div>
+
+<button class="btn btn-warning" style="display: inline-block !important; text-decoration-color: rgb(170, 73, 223) !important; background-color: rgb(161, 84, 171) !important; color: rgb(255, 255, 255) !important; height: 85px !important; text-decoration-style: solid !important; cursor: pointer;" data-autolink="1" data-autolink-url="https://garnermassivedeals.com/spotlight/discoschrooms/product-page/">Get it now</button><span data-custom-code="">
+
+ </span></div>
+
+<!-- End Testimonial Section -->
+
+<!-- Video Section -->
+
+
+
+<!-- End Video Section -->
+
+<!-- Footer Section -->
+
+<footer class="section p-all-2" style="background-color: rgb(0, 0, 0) !important;"><h1 style="text-align: center !important;"><img src="Logo_1.png" class="img-fluid" style="width: 143px !important;"><div class="container" style="min-height:150px;"><div class="m-5"><span style="color: rgb(255, 255, 255); font-family: Urbanist, sans-serif; font-size: 16px; text-align: center;">Garner Massive Deals is a registered Doing Business As (DBA) for Little Warrior Legacy LLC.</span></div></div></h1>
+
+	<div class="container">
+
+		<div class="row">
+
+			
+
+		</div>
+
+	</div>
+
+</footer>
+
+<!-- End Footer Section -->
+
+
+
+<!--CF_SAVE_PERMITTED-->
+
+
+<!--CF_SAVE_PERMITTED-->
+
+
+<!--CF_SAVE_PERMITTED-->
+
+
+</body>
+</html>
