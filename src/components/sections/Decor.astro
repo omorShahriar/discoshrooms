@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import light from "@/assets/light.jpg";
+---
+
+<section>
+  <div class="grid grid-cols-2 gap-8 items-center">
+    <Image src={light} alt="woman smiling" />
+    <div>
+      <h2 class="text-zinc-800">Got flair for unique decor?</h2>
+      <ul class="flex flex-col gap-2 my-6">
+        <li>
+          <span class="font-semibold">Individuality:</span> Each DiscoSchroom is
+          crafted by hand, meaning no two are alike - a unique declaration of your
+          personality.
+        </li>
+        <li>
+          <span class="font-semibold">Happiness Boost:</span> With its sparkly design,
+          it injects spaces with an instant 'happy' vibe that lifts your spirits.
+        </li>
+        <li>
+          <span class="font-semibold">Thrills Galore:</span> Expect a fun light show
+          as the DiscoSchroom twinkle unpredictably when hit by light - pure joy
+          in anticipation!
+        </li>
+        <li>
+          <span class="font-semibold">Homey Bliss & Safety Feelings:</span> When
+          used as home decor, they bring a soothing atmosphere that symbolizes peace
+          and security within your haven.
+        </li>
+        <li>
+          <span class="font-semibold">Conjuring Magic & Wonderment :</span> Their
+          dazzling design transforms any room into a dreamy landscape, sparking wonderment
+          and intrigue in a fairy-tale-like setting.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

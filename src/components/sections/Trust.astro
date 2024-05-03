@@ -1,0 +1,30 @@
+---
+import { getImage, Image } from "astro:assets";
+
+import background from "@/assets/ybg.png";
+
+const optimizedBackground = await getImage({
+  src: background,
+  format: "webp",
+});
+import ar from "@/assets/ar.png";
+import fr from "@/assets/fr.png";
+import tpr from "@/assets/tpr.png";
+---
+
+<section>
+  <h2 class="text-center my-8">Trusted by over 4,400+ Happy Customers</h2>
+  <p class="max-w-4xl mx-auto mt-12 text-center">
+    We average 5-star reviews from trusted online source such as Facebook,
+    Amazon and Trustpilot! Read our customers reviews on our product page to
+    hear directly from our happy customers!
+  </p>
+  <div
+    style={`background-image: url(${optimizedBackground.src})`}
+    class="py-12 w-full bg-cover bg-no-repeat my-12 grid place-content-center gap-3"
+  >
+    <Image src={ar} alt="Amazon Reviews" width={300} height={300} />
+    <Image src={fr} alt="Facebook Reviews" width={300} height={300} />
+    <Image src={tpr} alt="TrustPilot Reviews" width={300} height={300} />
+  </div>
+</section>

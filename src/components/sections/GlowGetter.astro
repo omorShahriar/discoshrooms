@@ -1,0 +1,33 @@
+---
+import { getImage, Image } from "astro:assets";
+
+import background from "@/assets/glow-bg.jpg";
+import woman from "@/assets/woman-smiling.jpg";
+
+const optimizedBackground = await getImage({
+  src: background,
+  format: "webp",
+});
+---
+
+<div
+  style={`background-image: url(${optimizedBackground.src});`}
+  class="h-[1020px] bg-cover w-full bg-center bg-no-repeat my-12 grid place-content-center"
+>
+  <section>
+    <div class="grid grid-cols-2 gap-8 text-white items-center">
+      <Image src={woman} alt="woman smiling" />
+      <div>
+        <h2>Be the glow-getter!</h2>
+        <p>
+          Imagine a handmade treasure that lights up your space and sets the
+          perfect groove - that's what we've got. Each mushroom-shaped disco
+          ball is a one-of-a-kind work of art, made just for you. Small quirks?
+          Just part of its unique story. It's a statement that screams, "This is
+          my style!" And it works magic, adding that special glow to parties or
+          chill sessions with friends.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>

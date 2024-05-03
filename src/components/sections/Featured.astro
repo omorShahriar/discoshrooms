@@ -1,0 +1,25 @@
+---
+import Heading from "../global/Heading.astro";
+import Card from "../ui/Card.astro";
+const products = [
+  {
+    imagePath: "/src/assets/products/p1.jpg",
+    title: "",
+    body: "Now my space feels like a magical haven and I'm living for it!",
+    href: "/product",
+  },
+  {
+    imagePath: "/src/assets/products/p2.jpg",
+    title: "",
+    body: "Bought one for my bestie's birthday, and she can't stop raving about it. It's the star of her apartment - literally glows with cool vibes!",
+    href: "/product",
+  },
+];
+---
+
+<section>
+  <Heading> DiscoSchrooms </Heading>
+  <div class="gap-4 grid grid-cols-12">
+    {products.map((product) => <Card {...product} />)}
+  </div>
+</section>

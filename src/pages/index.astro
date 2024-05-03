@@ -1,10 +1,22 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Featured from "@/components/sections/Featured.astro";
+import GlowGetter from "@/components/sections/GlowGetter.astro";
+import Decor from "@/components/sections/Decor.astro";
+import Carousel from "@/components/ui/Carousel.tsx";
+import Sparkle from "@/components/sections/Sparkle.astro";
+import Trust from "@/components/sections/Trust.astro";
 ---
 
 <Layout title="Discoschrooms">
   <main class="flex-1">
     <Hero />
+    <Featured />
+    <GlowGetter />
+    <Decor />
+    <Carousel client:idle />
+    <Sparkle />
+    <Trust />
   </main>
 </Layout>
