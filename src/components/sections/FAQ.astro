@@ -1,0 +1,47 @@
+---
+import FaqAccordion from "@/components/global/FaqAccordion.tsx";
+
+const faqs = [
+  {
+    title: "ARE THESE DISCOSCHROOMS HANDMADE LIKE YOU SAY",
+    content:
+      "Yes they are! each one has its own personality and charm, just the way we like it!",
+  },
+  {
+    title:
+      "IF SOMETHING GOES WRONG OR IF I NEED HELP CAN I COUNT ON CUSTOMER SERVICE TO HELP ME?",
+    content:
+      "Certainly, we're here to assist you. Although refunds are typically provided for undelivered packages, we are dedicated to supporting you with any concerns you may have.",
+  },
+  {
+    title:
+      "WILL THE LIGHT REFLECTIONS FROM THE DISCOSCHROOM BE TOO MUCH OR NOT ENOUGH FOR THE VIBE I WANT?",
+    content:
+      "Under the right lighting the DiscoSchroom can shine light on all sides of the room you are in. Try putting in direct sunlight and watch your room sparkle!",
+  },
+  {
+    title: "WILL IT LAST OR WILL IT FALL APART?",
+    content:
+      "handle with care as the DiscoSchroom likes to party the night away, but they do not like to be thrown around as they can lose on of their mirrors.",
+  },
+  {
+    title: "DO YOU OFFER FREE SHIPPING?",
+    content:
+      "The price already includes shipping, so there are no hidden fees or additional costs to worry about.",
+  },
+  {
+    title: "WHAT ABOUT SHIPPING TIMES?",
+    content:
+      "Shipping should take 7- 15 days. If your package is extremely late or did arrive you are eligible for a refund. But please be aware that these are selling fast and shipping times could take longer, please be patient.",
+  },
+];
+---
+
+<div class="bg-black text-white py-12">
+  <section>
+    <h2 class="text-center">FAQ</h2>
+    <div class="my-8">
+      <FaqAccordion faqs={faqs} client:idle />
+    </div>
+  </section>
+</div>

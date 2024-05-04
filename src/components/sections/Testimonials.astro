@@ -1,0 +1,42 @@
+---
+import CustomerCard from "../ui/CustomerCard.astro";
+import Button from "../ui/Button.astro";
+const reviews = [
+  {
+    imagePath: "/src/assets/customers/cr1.jpg",
+
+    body: "I decked my dorm with this discoschroom and suddenly, I'm the queen of lights. Friends can't get enough of my shiny, vibe-setting decor!",
+    name: "Natalie",
+  },
+  {
+    imagePath: "/src/assets/customers/cr2.jpg",
+
+    body: "My bestie squealed when she unwrapped the discoschroom - it's her 'shine bright' mantra. Now, she's the trendsetter in our group.",
+    name: "Ashley",
+  },
+  {
+    imagePath: "/src/assets/customers/cr3.jpg",
+
+    body: "After setting up my disco ball in our apartment, every night feels like a party. It's so shiny! Even the snarkiest friend was impressed.",
+    name: "Capria",
+  },
+];
+---
+
+<section>
+  <h2 class="text-center">Customer Testimonials</h2>
+  <ul class="grid grid-cols-12 gap-6 mt-24">
+    {
+      reviews.map((review) => (
+        <CustomerCard
+          imagePath={review.imagePath}
+          body={review.body}
+          name={review.name}
+        />
+      ))
+    }
+  </ul>
+  <div class="mt-16 flex justify-center">
+    <Button text="Get it now" link="/product" />
+  </div>
+</section>
