@@ -1,9 +1,110 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getImage, Image } from "astro:assets";
+
+import background from "@/assets/product-hero-bg.png";
+import sparkleBg from "@/assets/sparkle-bg.jpg";
+import ds from "@/assets/ds2.png";
+import Tiles from "@/components/pages/products/Tiles.astro";
+
+const optimizedBackground = await getImage({
+  src: background,
+  format: "webp",
+  quality: 100,
+});
+
+const optimizedSparkleBg = await getImage({
+  src: sparkleBg,
+  format: "webp",
+  quality: 100,
+});
+
+interface PropsData {
+  imgSrc: string;
+  title: string;
+  body: string;
+  withBG?: boolean;
+  imagePosition?: "left" | "right";
+}
+
+const sparkleData: PropsData = {
+  imgSrc: "/src/assets/image-with-text-box/sparkle.jpg",
+  title: "Sparkle Charms",
+  body: "Unleash the unique charm of a Handmade Disco Ball! 🌟 Crafted with love and an eye for dazzle... it transforms ANY room. ✨ Bid farewell to dull moments and hello to unforgettable ones. Grab yours now! Limited pieces that promise endless joy. Transform your space into a magical party zone... 🎉 Our handmade DiscoSchrooms... they're not just decorations. They’re your ticket to an unforgettable atmosphere, unique because each one is individually crafted. ✨ Safety and style? On your desk, it shines – making every day feel like a celebration. 🌟 Perfect for the modern woman who loves a touch of whimsy in her world. Grab yours now! 🛍️",
+  withBG: true,
+};
+
+const glowData: PropsData = {
+  imagePosition: "right",
+  imgSrc: "/src/assets/image-with-text-box/glow.jpg",
+  title: "Be the glow-getter!",
+  body: "Get the party started with your very own handmade DiscoSchrooms. Unique, with a touch of elegance, it's the last one you'll ever need... Transform any space into a magical, vibrant haven. Perfect for those unforgettable moments. 🎉 Don't miss out. Grab yours now! 🛍️ Last Chance to Shine Brighter! Our Handmade Disco Balls are not just decor... They're a vibe! Unique, with a charm that's all YOU. Each ball reflects your sparkle, turning any space into a party 🎉. Don't miss out... Grab yours now! This glow-up won't wait. 🕺💃 Your next magical moment is just a disco ball away. 🌟",
+};
+
+import ImageWithTextBox from "@/components/global/ImageWithTextBox.astro";
 ---
 
 <Layout title="Discoschrooms">
+  <div
+    style={`background-image: url(${optimizedBackground.src});`}
+    class="min-h-[80vh] bg-cover w-full bg-left-bottom bg-no-repeat grid place-content-center"
+  >
+    <section>
+      <div class="grid grid-cols-2 gap-8 items-center">
+        <div class="text-white flex-col flex gap-4">
+          <h1 class="text-6xl max-w-xl font-bold">
+            Unlock the Magic in Your Room
+          </h1>
+          <p>
+            You're setting the stage for happiness, thrilling moments, and
+            blissful gatherings. Imagine your place, filled with the sparkling
+            echoes of laughter and dance. Now, imagine bringing that enchanting
+            atmosphere right into your own space.
+          </p>
+        </div>
+        <div>
+          <Image src={ds} alt="Discoschrooms" />
+        </div>
+      </div>
+    </section>
+  </div>
+  <section>
+    <h2 class="text-center">We LOVE DiscoSchrooms!</h2>
+    <p>
+      Finding the perfect decor that vibes with your style in a sea of options
+      can feel like searching for a needle in a haystack, right? I get it. And
+      so do we. Introducing our Handmade DiscoSchrooms... A treasure trove of
+      individuality and elegance, designed specifically with you in mind. What
+      sets ours apart? It’s all in the authenticity and the safe, vibrant
+      feelings they bring into any room. Every. Single. Piece. Is unique.
+      Crafted with love, our discoschrooms are not just decorations. They are an
+      experience. Adorn your space with a reflection of your vibrant
+      personality... and watch as it transforms into a magical haven, buzzing
+      with life and color. Sure, they’re perfect for any event... But they’re
+      also scarce. Handmade means not mass-produced, so when they’re gone,
+      they’re really gone. Imagine hosting a gathering that sparkles with more
+      than just conversation. A space that feels alive, dancing with reflections
+      of joy and light. That’s the promise of our DiscoSchrooms. Yes, other
+      options exist. But none with the heart, the soul, or the unique touch of
+      ours. They don’t just light up rooms... they light up smiles, memories,
+      and moments. And isn’t that what we all desire? A magical atmosphere where
+      every moment shines. This is your chance to own that magic. To make every
+      gathering unforgettable. Get yours now... because every moment should
+      sparkle. Don't wait. Make those magical moments yours today. 💫✨
+    </p>
+  </section>
+  <Tiles />
+  <div
+    style={`background-image: url(${optimizedSparkleBg.src});`}
+    class="py-36 bg-cover w-full bg-left-bottom bg-no-repeat grid place-content-center"
+  >
+    <section>
+      <ImageWithTextBox {...sparkleData} />
+    </section>
+  </div>
   <div>
-    <h1>Product page</h1>
+    <section>
+      <ImageWithTextBox {...glowData} />
+    </section>
   </div>
 </Layout>

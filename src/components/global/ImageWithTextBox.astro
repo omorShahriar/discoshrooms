@@ -1,0 +1,51 @@
+---
+import type { ImageMetadata } from "astro";
+interface Props {
+  imagePosition?: "left" | "right";
+  imgSrc: string;
+  title: string;
+  body: string;
+  withBG?: boolean;
+}
+import { Image } from "astro:assets";
+const {
+  imagePosition = "left",
+  imgSrc,
+  title,
+  body,
+  withBG = false,
+} = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/image-with-text-box/*.{jpeg,jpg,png,gif}"
+);
+if (!images[imgSrc])
+  throw new Error(
+    `"${imgSrc}" does not exist in glob: "src/assets/image-with-text-box/*.{jpeg,jpg,png,gif}"`
+  );
+---
+
+<div class="grid grid-cols-2 gap-8">
+  <div
+    class:list={[
+      "col-span-2 md:col-span-1",
+      { "md:order-2": imagePosition == "right" },
+    ]}
+  >
+    <Image
+      src={images[imgSrc]()}
+      alt={title}
+      width={538}
+      height={308}
+      class="w-full object-cover object-center"
+    />
+  </div>
+  <div
+    class:list={[
+      "col-span-2 md:col-span-1 flex flex-col gap-4",
+      { "text-white": withBG },
+    ]}
+  >
+    <h3 class="text-4xl font-bold">{title}</h3>
+    <p>{body}</p>
+  </div>
+</div>

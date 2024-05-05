@@ -1,0 +1,26 @@
+---
+import TileCard from "@/components/ui/TileCard.astro";
+const tiles = [
+  {
+    imagePath: "/src/assets/schrooms/elegance.gif",
+    title: "Elegance",
+    body: "Handmade DiscoSchrooms are described as a treasure trove of individuality and elegance, emphasizing their unique design and the ability to reflect the buyer’s personal style.",
+  },
+  {
+    imagePath: "/src/assets/schrooms/authenticity.gif",
+    title: "Authenticity",
+    body: "Each piece is crafted with authenticity, designed to bring safe, vibrant feelings into any room. They transform spaces into magical havens buzzing with life and color, enhancing the atmosphere of gatherings by adding joy and light.",
+  },
+  {
+    imagePath: "/src/assets/schrooms/handmade.gif",
+    title: "Handmade",
+    body: "The DiscoSchrooms are handmade, which means they are not mass-produced. This scarcity adds to their appeal, making each purchase more exclusive and urgent since once they're sold out, they're truly gone.",
+  },
+];
+---
+
+<section>
+  <div class="gap-12 grid grid-cols-12">
+    {tiles.map((tile) => <TileCard {...tile} />)}
+  </div>
+</section>
