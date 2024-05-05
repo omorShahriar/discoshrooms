@@ -1,6 +1,6 @@
 ---
 import FaqAccordion from "@/components/global/FaqAccordion.tsx";
-
+import Button from "../ui/Button.astro";
 const faqs = [
   {
     title: "ARE THESE DISCOSCHROOMS HANDMADE LIKE YOU SAY",
@@ -42,6 +42,9 @@ const faqs = [
     <h2 class="text-center">FAQ</h2>
     <div class="my-8">
       <FaqAccordion faqs={faqs} client:idle />
+    </div>
+    <div class="mt-16 flex justify-center">
+      <Button text="Get it now" link="/product" />
     </div>
   </section>
 </div>

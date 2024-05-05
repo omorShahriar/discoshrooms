@@ -4,7 +4,9 @@ import { Navigation, Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
+import c1 from "@/assets/carousel/c1.jpg";
+import c2 from "@/assets/carousel/c2.jpg";
+import c3 from "@/assets/carousel/c3.jpg";
 const Carousel = () => {
   return (
     <Swiper
@@ -22,17 +24,17 @@ const Carousel = () => {
     >
       <SwiperSlide>
         <div>
-          <img src="/src/assets/carousel/c1.jpg" />
+          <img src={c1.src} />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div>
-          <img src="/src/assets/carousel/c2.jpg" />
+          <img src={c2.src} />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div>
-          <img src="/src/assets/carousel/c3.jpg" />
+          <img src={c3.src} />
         </div>
       </SwiperSlide>
     </Swiper>
