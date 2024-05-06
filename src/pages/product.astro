@@ -6,7 +6,9 @@ import background from "@/assets/product-hero-bg.png";
 import sparkleBg from "@/assets/sparkle-bg.jpg";
 import ds from "@/assets/ds2.png";
 import Tiles from "@/components/pages/products/Tiles.astro";
-
+import Heading from "@/components/global/Heading.astro";
+import authorize from "@/assets/authorize.png";
+import paypal from "@/assets/paypal.png";
 const optimizedBackground = await getImage({
   src: background,
   format: "webp",
@@ -42,6 +44,7 @@ const glowData: PropsData = {
 };
 
 import ImageWithTextBox from "@/components/global/ImageWithTextBox.astro";
+import Testimonials from "@/components/pages/products/Testimonials.astro";
 ---
 
 <Layout title="Discoschrooms">
@@ -51,7 +54,7 @@ import ImageWithTextBox from "@/components/global/ImageWithTextBox.astro";
   >
     <section>
       <div class="grid grid-cols-2 gap-8 items-center">
-        <div class="text-white flex-col flex gap-4">
+        <div class="text-white flex-col flex gap-4 col-span-2 md:col-span-1">
           <h1 class="text-6xl max-w-xl font-bold">
             Unlock the Magic in Your Room
           </h1>
@@ -107,4 +110,30 @@ import ImageWithTextBox from "@/components/global/ImageWithTextBox.astro";
       <ImageWithTextBox {...glowData} />
     </section>
   </div>
+  <section>
+    <Heading>Customer Testimonials</Heading>
+    <Testimonials />
+  </section>
+  <section>
+    <Heading>Almost there!</Heading>
+    <form
+      class="flex items-center justify-center"
+      name="PrePage"
+      method="post"
+      action="https://Simplecheckout.authorize.net/payment/CatalogPayment.aspx"
+    >
+      <input
+        type="hidden"
+        name="LinkId"
+        value="b630f56b-8dad-43c7-8def-18b00488f928"
+      />
+      <input type="image" src={authorize.src} class="w-56" />
+    </form>
+    <a
+      href="https://garnermassivedeals.com/spotlight/discoschrooms/order-form/"
+      target="_blank"
+    >
+      <img src={paypal.src} alt="Paypal" class="w-56" />
+    </a>
+  </section>
 </Layout>

@@ -1,0 +1,38 @@
+---
+import TestimonicalCard from "./TestimonicalCard.astro";
+
+const testimonials = [
+  {
+    name: "Emily Torres",
+    imagePath: "/src/assets/products/testimonials/r1.png",
+    rating: 4,
+    review:
+      "Very good quality! Won’t regret ordering. Glass pieces are assembled really well. Looks sooo good while reflecting sun :)",
+  },
+  {
+    name: "Sophia Kim",
+    imagePath: "/src/assets/products/testimonials/r2.png",
+    rating: 4.5,
+    review:
+      "The effect is beautiful but the product itself isn’t flawless. Buy it and have fun, but managed your expectations. Arrived fast! Thank you!",
+  },
+  {
+    name: "Elijah Burger",
+    imagePath: "/src/assets/products/testimonials/r3.png",
+    rating: 5,
+    review:
+      "The order came well packed, with bubble wrap and other soft materials. The finish is well done, with the edges of the mushroom top very close.",
+  },
+  {
+    name: "Clara Johnson",
+    imagePath: "/src/assets/products/testimonials/r4.png",
+    rating: 4,
+    review:
+      "Super light and just like the picture!! Would recommend. Super fast shipping also",
+  },
+];
+---
+
+<div class="grid grid-cols-12 md:gap-12 gap-y-4">
+  {testimonials.map((t) => <TestimonicalCard {...t} />)}
+</div>
